@@ -5,10 +5,6 @@
 
 > Save the programming world one letter at a time... or watch it fall to Assembly.
 
-
-![Assembly Endgame Screenshot](<img width="697" height="937" alt="Screenshot 2025-07-22 135523" src="https://github.com/user-attachments/assets/eeeefbe8-d69e-4102-955d-518caa7fbb60" />
-) <!-- Optional: Replace with actual screenshot path -->
-
 ## 🎮 Play Now
 
 🌐 [assembly-endgame.netlify.app](https://ultimateendgame.netlify.app/)
