@@ -1,0 +1,495 @@
+/* RESET & BASE */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* allow vertical scroll only */
+  font-family: "Hanken Grotesk", Arial, sans-serif;
+  background-color: #1a1a2e;
+  color: #eaeaea;
+}
+
+
+/* FULLSCREEN MAIN */
+main {
+  width: 100vw;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  gap: 20px;
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+
+}
+
+/* THEMES */
+.theme-dark {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #eaeaea;
+}
+.theme-cyberpunk {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a0033 50%, #000 100%);
+  color: #00ff41;
+}
+.theme-matrix {
+  background: linear-gradient(135deg, #000 0%, #001100 100%);
+  color: #00ff00;
+}
+
+/* THEME SWITCHER BUTTONS */
+.theme-switcher {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.theme-btn {
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-transform: capitalize;
+}
+.theme-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.theme-btn.active {
+  box-shadow: 0 0 0 2px #fff, 0 0 10px #fff4;
+}
+
+/* Dark theme */
+.theme-dark .theme-btn {
+  background: #2e2e3a;
+  color: #FFD369;
+}
+.theme-dark .theme-btn.active {
+  background: #FFD369;
+  color: #1a1a2e;
+}
+
+/* Cyberpunk theme */
+.theme-cyberpunk .theme-btn {
+  background: #210047;
+  color: #00ffea;
+}
+.theme-cyberpunk .theme-btn.active {
+  background: #00ffea;
+  color: #1a0033;
+}
+
+/* Matrix theme */
+.theme-matrix .theme-btn {
+  background: #002200;
+  color: #00ff00;
+}
+.theme-matrix .theme-btn.active {
+  background: #00ff00;
+  color: #001100;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+}
+header h1 {
+  font-size: 2rem;
+  color: #FFD369;
+  margin-bottom: 6px;
+}
+header p {
+  font-size: 1rem;
+  color: #999;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* GAME STATUS */
+section.game-status {
+  width: 100%;
+  max-width: 800px;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+section.game-status.won {
+  background-color: #28a745;
+  color: #fff;
+}
+section.game-status.lost {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* WORD DISPLAY */
+section.word {
+  display: flex;
+  gap: 6px;
+}
+section.word > span {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  background-color: #34344e;
+  border-bottom: 2px solid #FFD369;
+  border-radius: 6px;
+}
+section.word > span.missed-letter {
+  color: #ff4d4f;
+}
+
+/* KEYBOARD */
+section.keyboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+  gap: 6px;
+  max-width: 800px;
+  width: 100%;
+}
+section.keyboard > button {
+  height: 34px;
+  width: 34px;
+  background-color: #FFD369;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+section.keyboard > button.correct {
+  background-color: #28a745;
+  color: #fff;
+}
+section.keyboard > button.wrong {
+  background-color: #dc3545;
+  color: #fff;
+}
+section.keyboard > button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* NEW GAME BUTTON */
+button.new-game {
+  background-color: #00bcd4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 12px;
+  transition: background-color 0.3s;
+}
+button.new-game:hover {
+  background-color: #0097a7;
+}
+
+/* LANGUAGE CHIPS */
+section.language-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+span.chip {
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  position: relative;
+  background-color: #2d2d44;
+  color: #eaeaea;
+}
+span.chip.lost::before {
+  content: "💀";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  border-radius: 6px;
+}
+
+/* CONFETTI / PARTICLE FX */
+.confetti-container, .particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+}
+.confetti-container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.confetti-piece {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  animation: confetti-fall 3s linear infinite;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(720deg); }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.roast {
+  animation: savageRoast 0.6s ease-out forwards;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color:#000000;
+  margin-top: 0.5rem;
+}
+@keyframes savageRoast {
+  0% { opacity: 0; transform: scale(0.8) rotate(-2deg); }
+  50% { opacity: 1; transform: scale(1.1) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+  section.word > span {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  section.keyboard {
+    grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
+  }
+}
+
+
+/* === Common Layout === */
+.powerups {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.powerup-btn {
+  padding: 10px 18px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+/* === Theme: DARK === */
+.theme-dark .powerup-btn {
+  background-color: #ffc107;
+  color: #000;
+}
+.theme-dark .powerup-btn:disabled {
+  background-color: #6c757d;
+  color: #ccc;
+}
+
+/* === Theme: LIGHT === */
+.theme-light .powerup-btn {
+  background-color: #673ab7;
+  color: white;
+}
+.theme-light .powerup-btn:disabled {
+  background-color: #b39ddb;
+  color: #eee;
+}
+
+/* === Theme: CYBERPUNK === */
+.theme-cyberpunk .powerup-btn {
+  background-color: #ff007f;
+  color: #000;
+}
+.theme-cyberpunk .powerup-btn:disabled {
+  background-color: #444;
+  color: #999;
+}
+
+/* === Theme: MATRIX === */
+.theme-matrix .powerup-btn {
+  background-color: #00ff41;
+  color: #000;
+}
+.theme-matrix .powerup-btn:disabled {
+  background-color: #225d28;
+  color: #88ff99;
+}
+
+/* === Timer Styling === */
+.timer {
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: #fff;
+}
+
+/* Optional: Theme-Specific Timer Text Colors */
+.theme-light .timer {
+  color: #222;
+}
+.theme-cyberpunk .timer {
+  color: #ff00cc;
+}
+.theme-matrix .timer {
+  color: #00ff41;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  gap: 1.5rem; /* Add space between spans */
+  margin: 15px 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+/* === Achievements Panel === */
+.achievements-panel {
+  margin-top: 30px;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1rem;
+  background-color: transparent;
+  color: inherit;
+}
+
+/* Summary Styles */
+.achievements-panel summary {
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Grid Layout */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
+/* Individual Achievement Card */
+.achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #aaa;
+  border: 1px dashed #666;
+  transition: all 0.3s ease;
+}
+
+/* Unlocked Achievements */
+.achievement-item.unlocked {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+/* Icon and Text */
+.achievement-icon {
+  font-size: 1.6rem;
+}
+.achievement-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.achievement-desc {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* === Light Theme === */
+.theme-light .achievements-panel summary {
+  color: #222;
+}
+.theme-light .achievement-item {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px dashed #bbb;
+}
+.theme-light .achievement-item.unlocked {
+  background-color: #e0ffe0;
+  color: #222;
+}
+
+/* === Dark Theme === */
+.theme-dark .achievement-item {
+  background-color: #2e2e2e;
+  color: #ccc;
+  border: 1px dashed #666;
+}
+.theme-dark .achievement-item.unlocked {
+  background-color: #444;
+  color: #fff;
+}
+
+/* === Cyberpunk Theme === */
+.theme-cyberpunk .achievement-item {
+  background-color: #220022;
+  color: #ff66cc;
+  border-color: #ff00ff55;
+}
+.theme-cyberpunk .achievement-item.unlocked {
+  background-color: #ff00ff22;
+  color: #fff;
+}
+
+/* === Matrix Theme === */
+.theme-matrix .achievement-item {
+  background-color: #002200;
+  color: #00ff41aa;
+  border-color: #00ff41aa;
+}
+.theme-matrix .achievement-item.unlocked {
+  background-color: #003300;
+  color: #00ff41;
+}
+.theme-matrix a {
+  color: greenyellow;
+}
+
+.theme-dark a {
+  color: whitesmoke;
+}
+
+.theme-cyberpunk a {
+  color: #ff66cc;
+}
